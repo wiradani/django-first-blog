@@ -7,7 +7,16 @@
                 {{ post.published_date }}
             </div>
         {% endif %}
+        <a class="btn btn-default" href="{% url 'post_edit' pk=post.pk %}"><span class="glyphicon glyphicon-pencil"></span></a>
+        <a class="btn btn-default" href="{% url 'add_tag_post' pk=post.pk %}"><span class="glyphicon glyphicon-tag"></span></a>
+        <a class="btn btn-default" href="{% url 'post_edit' pk=post.pk %}"><span class="glyphicon glyphicon-comment"></span></a>
         <h2>{{ post.title }}</h2>
         <p>{{ post.text|linebreaksbr }}</p>
+        <h3>Tags:</h3>
+        {%for tag in tag %}
+        <p>{{ tag }}</p>
+        {% endfor %}
+
     </div>
+
 {% endblock %}
