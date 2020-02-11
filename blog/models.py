@@ -25,3 +25,13 @@ class Tag(models.Model):
     def __str__(self):
         return self.tag
 
+
+class Comment(models.Model):
+    post = models.ForeignKey(Post, on_delete=models.CASCADE)
+    rating = models.CharField(max_length=60)
+    text = models.TextField()
+
+    def __str__(self):
+        return self.text
+
+

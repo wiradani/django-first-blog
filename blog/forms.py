@@ -2,6 +2,7 @@ from django import forms
 
 from .models import Post
 from .models import Tag
+from .models import Comment
 
 FAVORITE_COLORS_CHOICES = [
     ('blue', 'Blue'),
@@ -29,4 +30,10 @@ class AddTagForm(forms.Form):
 class FilterForm(forms.Form):
     fil = forms.CharField(label='your tags', max_length=100)
 
+
+class CommentForm(forms.ModelForm):
+
+    class Meta:
+        model = Comment
+        fields = ('rating','text')
 

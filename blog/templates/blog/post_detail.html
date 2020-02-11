@@ -9,12 +9,21 @@
         {% endif %}
         <a class="btn btn-default" href="{% url 'post_edit' pk=post.pk %}"><span class="glyphicon glyphicon-pencil"></span></a>
         <a class="btn btn-default" href="{% url 'add_tag_post' pk=post.pk %}"><span class="glyphicon glyphicon-tag"></span></a>
-        <a class="btn btn-default" href="{% url 'post_edit' pk=post.pk %}"><span class="glyphicon glyphicon-comment"></span></a>
+        <a class="btn btn-default" href="{% url 'add_comment' pk=post.pk %}"><span class="glyphicon glyphicon-comment"></span></a>
         <h2>{{ post.title }}</h2>
         <p>{{ post.text|linebreaksbr }}</p>
         <h3>Tags:</h3>
         {%for tag in tag %}
-        <p>{{ tag }}</p>
+            <p>{{ tag }}</p>
+        {% endfor %}
+        <br>
+        <h3>Comments:</h3>
+        {%for comment in comment %}
+        <div>
+            <p> given rating : {{ comment.rating }}</p>
+            <p> comment : {{ comment.text }}</p>
+        </div>
+        <br>
         {% endfor %}
 
     </div>

@@ -2,11 +2,13 @@ from django.shortcuts import render
 from django.utils import timezone
 from .models import Post
 from .models import Tag
+from .models import Comment
 from django.shortcuts import render, get_object_or_404
 from .forms import PostForm
 from .forms import TagForm
 from .forms import AddTagForm
 from .forms import FilterForm
+from .forms import CommentForm
 from django.shortcuts import redirect
 
 def post_list(request):
@@ -24,7 +26,8 @@ def post_list(request):
 def post_detail(request, pk):
     post = get_object_or_404(Post, pk=pk)
     tag = Tag.objects.filter(posts__id=pk)
-    return render(request, 'blog/post_detail.html', {'post': post, 'tag':tag})
+    comment = Comment.objects.filter(post__pk=pk)
+    return render(request, 'blog/post_detail.html', {'post': post, 'tag':tag ,'comment':comment})
 
 
 def post_new(request):
@@ -94,5 +97,17 @@ def add_tag_post(request ,pk):
         form = AddTagForm()
     return render(request, 'blog/post_add_tag.html', {'form': form})
 
+
+def add_comment(request, pk):
+    if request.method == "POST":
+        form = CommentForm(request.POST)
+        post = Post.objects.get(pk=pk)
+        if form.is_valid():
+            comment = Comment( post=post, rating=form.cleaned_data['rating'], text=form.cleaned_data['text'])
+            comment.save()
+            return redirect('post_detail', pk=post.pk)
+    else:
+        form = CommentForm()
+    return render(request, 'blog/post_add_tag.html', {'form': form})
 
 
